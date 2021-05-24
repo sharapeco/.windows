@@ -59,12 +59,19 @@ Set-PoshPrompt -Theme pure
 
 $env:FZF_DEFAULT_OPTS="--reverse --border --height 50%"
 $env:FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git --exclude node_modules .'
-# function _fzf_compgen_path {
-#    fd -HL --exclude ".git" . "$1"
-# }
-# function _fzf_compgen_dir {
-#     fd --type d -HL --exclude ".git" . "$1"
-# }
+
+function FuzzyHistory {
+    if (Get-Command Get-PSReadLineOption -ErrorAction SilentlyContinue) {
+        $result = Get-Content (Get-PSReadLineOption).HistorySavePath | fzf --no-sort --tac
+    } else {
+        $result = Get-History | ForEach-Object { $_.CommandLine } | fzf --no-sort --tac
+    }
+    if ($null -ne $result) {
+        Write-Output "Invoking '$result'`n"
+        Invoke-Expression "$result" -Verbose
+    }
+}
+New-Alias -Name fh -Scope Global -Value FuzzyHistory -ErrorAction Ignore
 
 function jd {
 	fd --hidden --follow --type d --exclude .git --exclude node_modules | fzf | cd
