@@ -58,8 +58,14 @@ Set-PoshPrompt -Theme pure
 # ----------------------------------------------------------------
 
 $env:FZF_DEFAULT_OPTS="--reverse --border --height 50%"
-$env:FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git --exclude node_modules .'
+$env:FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git --exclude node_modules --exclude backup .'
 
+# 内部で使うための fd のデフォルトオプション
+function MyFind {
+	fd --hidden --follow --exclude .git --exclude node_modules --exclude backup $args
+}
+
+# 履歴検索
 function FuzzyHistory {
     if (Get-Command Get-PSReadLineOption -ErrorAction SilentlyContinue) {
         $result = Get-Content (Get-PSReadLineOption).HistorySavePath | fzf --no-sort --tac
@@ -73,41 +79,44 @@ function FuzzyHistory {
 }
 New-Alias -Name fh -Scope Global -Value FuzzyHistory -ErrorAction Ignore
 
-function jd {
-	fd --hidden --follow --type d --exclude .git --exclude node_modules | fzf | cd
+# カレントディレクトリ配下のディレクトリに cd
+function FuzzyMoveDownDirectory {
+	MyFind --type d | fzf | cd
 }
+New-Alias -Name jd -Scope Global -Value FuzzyMoveDownDirectory -ErrorAction Ignore
 
-function _fzf_open {
-	param (
-		[ScriptBlock]$command,
-		[string]$path = '.'
-	)
+# 指定したパスの中からファイルを選択する
+function FuzzySelectFile {
+	param ([string]$path = '.')
 
 	if ((Get-Item $path).PSIsContainer) {
 		# フォルダの場合は fzf でファイルを選ぶ
-		$selected = fd --hidden --follow --type f --search-path $path | fzf --preview "bat --color=always --style=plain --line-range :100 {}"
+		$selected = MyFind --search-path $path |
+		  fzf --preview "bat --color=always --style=plain --line-range :100 {}"
 		if ($selected) {
-			&$command "$selected"
+			return "$selected"
 		}
 	} else {
-		&$command "$path"
+		return "$path"
 	}
 }
 
-function vi {
+function FuzzyOpenWithXyzzy {
 	[CmdletBinding()]
-	param (
-		[string]$path = '.'
-	)
-	_fzf_open { param([string]$file); C:\Apps\xyzzy\xyzzycli $file }.GetNewClosure() $path
+	param ([string]$path = '.')
+	FuzzySelectFile $path | % { C:\Apps\xyzzy\xyzzycli $_ }
 }
+New-Alias -Name vi -Scope Global -Value FuzzyOpenWithXyzzy -ErrorAction Ignore
 
 # ----------------------------------------------------------------
 # z - jump around
 # ----------------------------------------------------------------
 
 Import-Module z
-function jp { z -l | oss | select -skip 3 | % { $_ -split " +" } | sls -raw '^[a-zA-Z].+' | fzf | cd }
+function FuzzyJumpAround {
+	z -l | oss | select -skip 3 | % { $_ -split " +" } | sls -raw '^[a-zA-Z].+' | fzf | cd
+}
+New-Alias -Name jp -Scope Global -Value FuzzyJumpAround -ErrorAction Ignore
 
 # ----------------------------------------------------------------
 # Linux like commands
