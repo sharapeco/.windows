@@ -172,6 +172,25 @@ function ll { lsd -l --blocks permission --blocks size --blocks date --blocks na
 function tree { lsd --tree $args }
 
 # ----------------------------------------------------------------
+# Utility for WSL
+# ----------------------------------------------------------------
+
+function Convert-Windows-Path-To-WSL {
+	$args | % {
+		if ($_ -is [string]) {
+			return $_.Replace('\', '/').Replace('C:/', '/mnt/c/')
+		} else {
+			return $_
+		}
+	}
+}
+
+function hexyl {
+	$largs = Convert-Windows-Path-To-WSL @args
+	$input | wsl hexyl $largs
+}
+
+# ----------------------------------------------------------------
 # Misc
 # ----------------------------------------------------------------
 
