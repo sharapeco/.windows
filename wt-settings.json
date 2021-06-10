@@ -35,8 +35,9 @@
         "defaults":
         {
             // Put settings here that you want to apply to all profiles.
-			"fontFace": "Cascadia Code PL",
-			"fontSize": 12
+			"fontFace": "CaskaydiaCove Nerd Font",
+			// "fontFace": "MesloLGS NF",
+			"fontSize": 11
         },
         "list":
         [
