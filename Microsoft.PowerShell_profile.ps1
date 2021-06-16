@@ -190,6 +190,41 @@ function hexyl {
 	$input | wsl hexyl $largs
 }
 
+function certbot {
+	wsl certbot $(Convert-Windows-Path-To-WSL @args)
+}
+
+function certbot-create {
+	[CmdletBinding()]
+	param (
+		[string]$domain
+	)
+	wsl certbot certonly `
+	  --manual `
+	  --domain $domain `
+	  --preferred-challenges dns `
+	  --work-dir ~/var/lib/letsencrypt `
+	  --logs-dir ~/var/log/letsencrypt `
+	  --config-dir ~/etc/letsencrypt
+	wsl fd $domain ~/etc/letsencrypt/live `
+	  --type d `
+	  --exec cp -RL '{}' /mnt/c/Server/certs/
+}
+
+# ----------------------------------------------------------------
+# Windows Services
+# ----------------------------------------------------------------
+
+function nginx-restart {
+	sudo sc stop nginx
+	sudo sc start nginx
+}
+
+function unbound-restart {
+	sudo sc stop unbound
+	sudo sc start unbound
+}
+
 # ----------------------------------------------------------------
 # Misc
 # ----------------------------------------------------------------
