@@ -42,6 +42,7 @@
 
 # git log などで使用
 $env:LESSCHARSET = "utf-8"
+$env:GIT_SSH = "C:\Windows\System32\OpenSSH\ssh.exe"
 
 # Keybinding
 Set-PSReadLineOption -EditMode Emacs
