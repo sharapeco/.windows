@@ -14,23 +14,38 @@
 - [nkf](https://www.vector.co.jp/soft/win95/util/se295331.html)
 - [whois](https://docs.microsoft.com/ja-jp/sysinternals/downloads/whois)
 
+### PowerShell からインストール
+
 ```shell-session
-> Install-Module oh-my-posh -Scope CurrentUser
-> Install-Module z -Scope CurrentUser
-> scoop install 7z
-> scoop install bat
-> scoop install fd
-> scoop install fzf
-> scoop install ghostscript
-> scoop install gibo
-> scoop install git-with-openssh
-> scoop install jq
-> scoop install lsd
-> scoop install ripgrep
-> scoop install sed
-> scoop install tokei
-> scoop install uutils-coreutils
-> scoop install yarn
+Install-Module oh-my-posh -Scope CurrentUser
+Install-Module z -Scope CurrentUser
+scoop install 7z
+scoop install bat
+scoop install fd
+scoop install fzf
+scoop install ghostscript
+scoop install gibo
+scoop install git-with-openssh
+scoop install jq
+scoop install lsd
+scoop install ripgrep
+scoop install sed
+scoop install tokei
+scoop install uutils-coreutils
+scoop install yarn
+```
+
+### WSL からインストール
+
+WSL で Ubuntu 18.0 を入れてある
+
+```shell-session
+sudo apt install certbot
+sudo apt install dos2unix
+sudo apt install expect
+sudo apt install hexyl
+sudo apt install ripgrep
+sudo apt install zsh
 ```
 
 ## 設定ファイルの場所
