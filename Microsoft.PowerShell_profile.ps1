@@ -51,8 +51,11 @@ Set-PSReadLineOption -EditMode Emacs
 # Powerline
 # ----------------------------------------------------------------
 
-Import-Module oh-my-posh
-Set-PoshPrompt -Theme pure
+# Windows Terminal のみで有効にする
+if ($env:WT_PROFILE_ID) {
+	Import-Module oh-my-posh
+	Set-PoshPrompt -Theme pure
+}
 
 # ----------------------------------------------------------------
 # fzf
