@@ -2,7 +2,8 @@
 
 ## 導入済みパッケージ
 
-- [Scoop](https://scoop.sh/): Windows 向けの CLI でパッケージをインストールためのソフト
+- [Cascadia Code Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases): PowerLine やアイコンを表示できるようにした Cascadia Code
+- [Scoop](https://scoop.sh/): Windows 向けの CLI でパッケージをインストール
 - [FFmpeg](https://www.gyan.dev/ffmpeg/builds/)
 - [GNUWin32](https://sourceforge.net/projects/getgnuwin32/)
 	- GNU のコマンドを Windows で使えるようにしたもの
