@@ -23,8 +23,8 @@
 	"wordDelimiters": " ",
 
 	// ウィンドウサイズ
-	"initialCols": 100,
-	"initialRows": 40,
+	"initialCols": 120,
+	"initialRows": 52,
 
     // A profile specifies a command to execute paired with information about how it should look and feel.
     // Each one of them will appear in the 'New Tab' dropdown,
@@ -37,7 +37,7 @@
             // Put settings here that you want to apply to all profiles.
 			"fontFace": "CaskaydiaCove Nerd Font",
 			// "fontFace": "MesloLGS NF",
-			"fontSize": 11
+			"fontSize": 12
         },
         "list":
         [
