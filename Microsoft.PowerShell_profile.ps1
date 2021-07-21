@@ -169,6 +169,13 @@ function certbot-create {
 	param (
 		[string]$domain
 	)
+	if ([string]::IsNullorEmpty($domain)) {
+		Write-Host "Certbot で証明書を発行する"
+		Write-Host ""
+		Write-Host "USAGE:"
+		Write-Host "    certbot-create <domain>"
+		return
+	}
 	wsl certbot certonly `
 	  --manual `
 	  --domain $domain `
