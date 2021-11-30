@@ -174,6 +174,8 @@ function certbot-create {
 		Write-Host ""
 		Write-Host "USAGE:"
 		Write-Host "    certbot-create <domain>"
+		Write-Host ""
+		Write-Host "証明書ファイルは C:/Server/certs/<domain>/ にできるよ"
 		return
 	}
 	wsl certbot certonly `
