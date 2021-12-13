@@ -195,7 +195,8 @@ function certbot-create {
 # ----------------------------------------------------------------
 
 function nginx-restart {
-	sudo sc stop nginx
+	# sudo sc stop nginx
+	sudo taskkill /f /IM nginx.exe
 	sudo sc start nginx
 }
 
