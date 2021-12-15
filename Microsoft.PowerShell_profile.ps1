@@ -243,3 +243,25 @@ function passwd-pem {
 	}
 	ssh-keygen -f "$pem" -p
 }
+
+function crop-images {
+	[CmdletBinding()]
+	param (
+		[string]$glob,
+		[string]$cropParam
+	)
+	if ([string]::IsNullorEmpty($cropParam)) {
+		Write-Host "指定した画像を一括で切り抜きする"
+		Write-Host "出力ファイル名は crop-<元のファイル名> となる"
+		Write-Host ""
+		Write-Host "USAGE:"
+		Write-Host "    crop-images <glob> <crop-param>"
+		Write-Host ""
+		Write-Host "<crop-param>: <width>x<height>+<x>+<y>"
+		return
+	}
+	foreach ($f in Get-Item $glob) {
+		$o = $f.Directory.ToString() + "\crop-" + $f.BaseName.ToString() + $f.Extension.ToString()
+		magick $f -crop $cropParam $o
+	}
+}
